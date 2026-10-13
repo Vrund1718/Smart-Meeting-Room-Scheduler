@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Meeting Room Scheduler | DAA Greedy + Min Heap Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <div>
+          <h1>Smart Meeting Room Scheduler</h1>
+          <p class="subtitle">Design & Analysis of Algorithms (DAA) — Greedy Algorithm + Custom Min Heap Priority Queue</p>
+        </div>
+      </div>
+      <div class="badge-tag">DAA Project Demo</div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- SECTION 1: MEETING INPUT -->
+    <section class="card-section">
+      <div class="section-header">
+        <h2>1. Meeting Input & Data Set</h2>
+        <p>Enter custom meetings or load pre-built sample data with realistic time overlaps.</p>
+      </div>
+
+      <div class="input-grid">
+        <div class="form-group">
+          <label for="meeting-title">Meeting Title</label>
+          <input type="text" id="meeting-title" placeholder="e.g. Project Sync / Viva Prep" />
+        </div>
+        <div class="form-group">
+          <label for="start-time">Start Time</label>
+          <input type="time" id="start-time" value="09:00" />
+        </div>
+        <div class="form-group">
+          <label for="end-time">End Time</label>
+          <input type="time" id="end-time" value="10:00" />
+        </div>
+        <div class="form-group button-group">
+          <button id="add-meeting-btn" class="btn btn-primary">➕ Add Meeting</button>
+        </div>
+      </div>
+
+      <!-- Error Toast message -->
+      <div id="error-message" class="error-banner hidden"></div>
+
+      <div class="action-toolbar">
+        <button id="load-sample-btn" class="btn btn-secondary">📋 Load Sample Data (8 Overlapping Meetings)</button>
+        <button id="clear-all-btn" class="btn btn-outline-danger">🗑️ Clear All</button>
+      </div>
+
+      <!-- Meeting Input Table -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Meeting Title</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Duration</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="meetings-table-body">
+            <tr class="empty-row">
+              <td colspan="6">No meetings added yet. Click "Load Sample Data" or add meetings above.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Run Scheduler Action -->
+      <div class="run-container">
+        <button id="schedule-btn" class="btn btn-success btn-lg">
+          ▶️ Run Greedy + Min Heap Scheduler
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STEP-BY-STEP ALGORITHM VISUALIZATION -->
+    <section id="visualization-section" class="card-section hidden">
+      <div class="section-header">
+        <div class="section-header-flex">
+          <div>
+            <h2>2. Step-by-Step Algorithm Visualization</h2>
+            <p>Trace how the Greedy choice + Array-based Min Heap processes sorted meetings line-by-line.</p>
+          </div>
+          <div class="step-controls">
+            <button id="prev-step-btn" class="btn btn-sm btn-secondary" disabled>⬅️ Previous Step</button>
+            <span id="step-counter" class="step-counter-badge">Step 1 of 8</span>
+            <button id="next-step-btn" class="btn btn-sm btn-secondary">Next Step ➡️</button>
+            <button id="show-all-btn" class="btn btn-sm btn-outline">📜 Show All Steps</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="single-step-view" class="step-card">
+        <!-- Filled dynamically by script.js -->
+      </div>
+
+      <div id="all-steps-view" class="all-steps-container hidden">
+        <!-- Filled dynamically when 'Show All Steps' is toggled -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: RESULT VIEW -->
+    <section id="result-section" class="card-section hidden">
+      <div class="section-header">
+        <h2>3. Optimal Room Allocation Schedule</h2>
+        <p>Final room assignment showing the minimum number of rooms required to satisfy all meetings.</p>
+      </div>
+
+      <div class="summary-banner" id="summary-banner">
+        <div class="summary-icon">🏢</div>
+        <div class="summary-content">
+          <div class="summary-title">Minimum Rooms Required</div>
+          <div class="summary-value" id="min-rooms-val">0</div>
+        </div>
+      </div>
+
+      <div class="room-schedule-grid" id="room-schedule-grid">
+        <!-- Room cards with assigned meetings rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: COMPLEXITY & ALGORITHM THEORY PANEL -->
+    <section id="complexity-section" class="card-section">
+      <div class="section-header">
+        <h2>4. Algorithm Complexity & Theoretical Justification</h2>
+        <p>Formal efficiency analysis and mathematical rationale for the Greedy + Min Heap solution.</p>
+      </div>
+
+      <div class="complexity-grid">
+        <!-- Theoretical Complexity Card -->
+        <div class="info-card">
+          <h3>⏱️ Theoretical Complexity</h3>
+          <ul class="complexity-list">
+            <li><strong>Sorting Step:</strong> <code>O(N log N)</code> — Meetings sorted by start time $S[i]$.</li>
+            <li><strong>Min Heap Operations:</strong> <code>O(log N)</code> per meeting for insertion/extractMin. For $N$ meetings, total heap time is <code>O(N log N)</code>.</li>
+            <li><strong>Total Time Complexity:</strong> <code>O(N log N)</code> — Dominated by sorting and heap operations.</li>
+            <li><strong>Space Complexity:</strong> <code>O(N)</code> — Storage for array-based Min Heap and room assignments.</li>
+          </ul>
+        </div>
+
+        <!-- Correctness Justification Card -->
+        <div class="info-card">
+          <h3>💡 Why the Greedy Choice is Correct</h3>
+          <div class="theory-text">
+            <p>1. <strong>Earliest End-Time Invariant:</strong> By ordering meetings by start time, when we process meeting $M_i$, all previously scheduled meetings started at or before $M_i$.</p>
+            <p>2. <strong>Optimal Reuse:</strong> The Min Heap root gives the room that frees up earliest ($E_{min}$). If $E_{min} \le S_i$, this room is free, and reusing it leaves rooms with later end times available for future meetings.</p>
+            <p>3. <strong>Necessity of New Room:</strong> If $E_{min} > S_i$, then <em>every</em> occupied room is still busy at $S_i$. Therefore, allocating a new room is strictly unavoidable.</p>
+            <p>4. <strong>Global Optimality:</strong> This proves the greedy choice is locally optimal and yields the global minimum number of rooms.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empirical Metrics Card -->
+      <div id="metrics-card" class="info-card metrics-card hidden">
+        <h3>📊 Actual Execution Metrics (This Run)</h3>
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-label">Meetings Processed (N)</div>
+            <div class="metric-val" id="metric-n">0</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Min Heap Pushes</div>
+            <div class="metric-val" id="metric-pushes">0</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Min Heap Pops (extractMin)</div>
+            <div class="metric-val" id="metric-pops">0</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Heap Comparisons</div>
+            <div class="metric-val" id="metric-heap-comp">0</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Sorting Comparisons</div>
+            <div class="metric-val" id="metric-sort-comp">0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Smart Meeting Room Scheduler — DAA Assignment Demonstration | Built with Node.js & Plain JS Min Heap</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
