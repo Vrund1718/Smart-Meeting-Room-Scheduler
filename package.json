@@ -1,12 +1,18 @@
 {
   "name": "daa-innovative",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Smart Meeting Room Scheduler using Greedy Algorithm and Custom Min Heap",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "daa",
+    "greedy-algorithm",
+    "min-heap",
+    "scheduler"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
