@@ -15,7 +15,7 @@ An interactive, visual demonstration of the **Greedy Algorithm** paired with an 
 ## 🌟 Key Features
 
 - 🧠 **Pure Algorithm from Scratch**: Binary Min Heap (`MinHeap`) implemented without third-party data structure libraries (`peek`, `insert`, `extractMin`, `heapifyUp`, `heapifyDown`).
-- ⚡ **Optimal Greedy Strategy**: Sorts meetings by start time ($\mathcal{O}(N \log N)$) and always reuses the room that frees up earliest ($\mathcal{O}(\log N)$).
+- ⚡ **Optimal Greedy Strategy**: Sorts meetings by start time (`O(N log N)`) and always reuses the room that frees up earliest (`O(log N)`).
 - 📊 **Step-by-Step Heap Visualizer**: Step through each decision showing:
   - Current meeting being scheduled
   - State of the Min Heap tree and internal array before and after
@@ -50,13 +50,13 @@ flowchart TD
 
 | Phase / Operation | Algorithm / Data Structure | Time Complexity | Space Complexity |
 | :--- | :--- | :--- | :--- |
-| **Greedy Sorting** | TimSort (by Start Time $S_i$) | $\mathcal{O}(N \log N)$ | $\mathcal{O}(N)$ |
-| **Earliest Room Check** | `MinHeap.peek()` | $\mathcal{O}(1)$ | $\mathcal{O}(1)$ |
-| **Room Reuse** | `extractMin()` + `insert()` | $\mathcal{O}(\log K)$ | $\mathcal{O}(1)$ |
-| **Room Allocation** | `insert()` | $\mathcal{O}(\log K)$ | $\mathcal{O}(1)$ |
-| **Overall Execution** | **Greedy + Min Heap** | **$\mathcal{O}(N \log N)$** | **$\mathcal{O}(N)$** |
+| **Greedy Sorting** | TimSort (by Start Time `S[i]`) | `O(N log N)` | `O(N)` |
+| **Earliest Room Check** | `MinHeap.peek()` | `O(1)` | `O(1)` |
+| **Room Reuse** | `extractMin()` + `insert()` | `O(log K)` | `O(1)` |
+| **Room Allocation** | `insert()` | `O(log K)` | `O(1)` |
+| **Overall Execution** | **Greedy + Min Heap** | **`O(N log N)`** | **`O(N)`** |
 
-*(Where $N$ is the total number of meetings and $K \le N$ is the maximum number of concurrent rooms).*
+*(Where **N** is the total number of meetings and **K ≤ N** is the maximum number of concurrent rooms).*
 
 ---
 
@@ -81,8 +81,9 @@ flowchart TD
 
 3. **Start the Express backend server**:
    ```bash
-   node server.js
+   npm start
    ```
+   *(or `node server.js`)*
 
 4. **Open in browser**:
    Visit [http://localhost:3000](http://localhost:3000)
@@ -98,7 +99,7 @@ flowchart TD
   - Meeting 3: `11:00` - `12:00`
 - **Expected Rooms:** **1**
 - **Allocation:**
-  - `Room 1`: Meeting 1 $\rightarrow$ Meeting 2 $\rightarrow$ Meeting 3
+  - `Room 1`: Meeting 1 → Meeting 2 → Meeting 3
 - **Logic:** Meeting 2 starts right as Meeting 1 ends (`10:00 <= 10:00`). Room 1 is immediately reused.
 
 ### 🔹 Test Case 2: Peak Concurrency (Fully Overlapping)
@@ -130,15 +131,15 @@ flowchart TD
 
 ## 🎤 Viva / Presentation Cheat Sheet (10-Point Summary)
 
-1. **Problem Statement:** Determine the minimum number of meeting rooms required to schedule $N$ intervals without overlap.
-2. **Greedy Strategy:** Sort meetings chronologically by start time ($S_i$).
-3. **Data Structure:** An array-based **Binary Min Heap** storing occupied rooms keyed by their earliest end time ($E_{min}$).
+1. **Problem Statement:** Determine the minimum number of meeting rooms required to schedule `N` intervals without overlap.
+2. **Greedy Strategy:** Sort meetings chronologically by start time (`S[i]`).
+3. **Data Structure:** An array-based **Binary Min Heap** storing occupied rooms keyed by their earliest end time (`E_min`).
 4. **Root Invariant:** The root element `heap[0]` always holds the room that becomes free earliest.
-5. **Decision Rule:** For each meeting $M_i$:
-   - If `root.endTime <= M_i.startTime`: **Reuse room** (`extractMin()`, update end time, `insert()`).
-   - If `root.endTime > M_i.startTime`: **Allocate new room** (`insert()`).
-6. **Time Complexity:** Sorting takes $\mathcal{O}(N \log N)$ and each of the $N$ meetings takes $\mathcal{O}(\log N)$ heap updates $\implies$ Overall $\mathcal{O}(N \log N)$.
-7. **Space Complexity:** $\mathcal{O}(N)$ to store rooms and heap nodes.
+5. **Decision Rule:** For each meeting `M[i]`:
+   - If `root.endTime <= M[i].startTime`: **Reuse room** (`extractMin()`, update end time, `insert()`).
+   - If `root.endTime > M[i].startTime`: **Allocate new room** (`insert()`).
+6. **Time Complexity:** Sorting takes `O(N log N)` and each of the `N` meetings takes `O(log N)` heap updates → Overall **`O(N log N)`**.
+7. **Space Complexity:** `O(N)` to store rooms and heap nodes.
 8. **Proof of Optimality:** If the earliest-freed room is still busy, every active room is busy at that moment (maximum depth of overlap). Allocating a new room is therefore inevitable and mathematically minimal.
 9. **Empirical Verification:** The app instruments each heap comparison, push, and pop to demonstrate logarithmic growth in real time.
 10. **Zero External Libraries:** The priority queue is implemented manually to demonstrate fundamental DAA principles.
