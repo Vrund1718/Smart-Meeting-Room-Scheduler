@@ -710,6 +710,23 @@ body {
   color: var(--text-primary);
 }
 
+.math-expr {
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 2px;
+}
+
+.math-expr em {
+  font-style: italic;
+}
+
+.math-expr sub {
+  font-size: 0.75em;
+  font-style: normal;
+}
+
 /* Empirical Metrics Grid */
 .metrics-card {
   margin-top: 10px;

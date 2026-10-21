@@ -145,8 +145,8 @@
         <div class="info-card">
           <h3>⏱️ Theoretical Complexity</h3>
           <ul class="complexity-list">
-            <li><strong>Sorting Step:</strong> <code>O(N log N)</code> — Meetings sorted by start time $S[i]$.</li>
-            <li><strong>Min Heap Operations:</strong> <code>O(log N)</code> per meeting for insertion/extractMin. For $N$ meetings, total heap time is <code>O(N log N)</code>.</li>
+            <li><strong>Sorting Step:</strong> <code>O(N log N)</code> — Meetings sorted by start time <code>S[i]</code>.</li>
+            <li><strong>Min Heap Operations:</strong> <code>O(log N)</code> per meeting for insertion/extractMin. For <span class="math-expr"><em>N</em></span> meetings, total heap time is <code>O(N log N)</code>.</li>
             <li><strong>Total Time Complexity:</strong> <code>O(N log N)</code> — Dominated by sorting and heap operations.</li>
             <li><strong>Space Complexity:</strong> <code>O(N)</code> — Storage for array-based Min Heap and room assignments.</li>
           </ul>
@@ -156,9 +156,9 @@
         <div class="info-card">
           <h3>💡 Why the Greedy Choice is Correct</h3>
           <div class="theory-text">
-            <p>1. <strong>Earliest End-Time Invariant:</strong> By ordering meetings by start time, when we process meeting $M_i$, all previously scheduled meetings started at or before $M_i$.</p>
-            <p>2. <strong>Optimal Reuse:</strong> The Min Heap root gives the room that frees up earliest ($E_{min}$). If $E_{min} \le S_i$, this room is free, and reusing it leaves rooms with later end times available for future meetings.</p>
-            <p>3. <strong>Necessity of New Room:</strong> If $E_{min} > S_i$, then <em>every</em> occupied room is still busy at $S_i$. Therefore, allocating a new room is strictly unavoidable.</p>
+            <p>1. <strong>Earliest End-Time Invariant:</strong> By ordering meetings by start time, when we process meeting <span class="math-expr"><em>M</em><sub><em>i</em></sub></span>, all previously scheduled meetings started at or before <span class="math-expr"><em>M</em><sub><em>i</em></sub></span>.</p>
+            <p>2. <strong>Optimal Reuse:</strong> The Min Heap root gives the room that frees up earliest (<span class="math-expr"><em>E</em><sub>min</sub></span>). If <span class="math-expr"><em>E</em><sub>min</sub> &le; <em>S</em><sub><em>i</em></sub></span>, this room is free, and reusing it leaves rooms with later end times available for future meetings.</p>
+            <p>3. <strong>Necessity of New Room:</strong> If <span class="math-expr"><em>E</em><sub>min</sub> &gt; <em>S</em><sub><em>i</em></sub></span>, then <em>every</em> occupied room is still busy at <span class="math-expr"><em>S</em><sub><em>i</em></sub></span>. Therefore, allocating a new room is strictly unavoidable.</p>
             <p>4. <strong>Global Optimality:</strong> This proves the greedy choice is locally optimal and yields the global minimum number of rooms.</p>
           </div>
         </div>
